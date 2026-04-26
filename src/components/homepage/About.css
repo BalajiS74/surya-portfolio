@@ -1,0 +1,315 @@
+/* Mobile First Design with Animations */
+.about-container {
+  background: #fff;
+  display: flex;
+  align-items: center;
+  font-family: "Segoe UI", sans-serif;
+  min-height: 80vh;
+  animation: fadeIn 0.6s ease;
+}
+
+/* Mobile First - Stack vertically */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  max-width: 100%;
+  width: 100%;
+  padding: 60px 20px;
+}
+
+.about-text {
+  flex: 1;
+  text-align: center;
+  animation: slideUp 0.6s ease forwards;
+}
+
+.about-text h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  animation: fadeInUp 0.8s ease;
+  margin-top: 0;
+}
+
+.about-text p {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  font-size: 1rem;
+  animation: fadeInUp 0.8s ease 0.1s backwards;
+}
+
+.about-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.8s ease 0.2s backwards;
+}
+
+.btn {
+  padding: 10px 25px;
+  border-radius: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-yellow {
+  background: #fcd34d;
+  color: #000;
+  border: none;
+}
+
+.btn-yellow:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(252, 211, 77, 0.3);
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icons a {
+  font-size: 1.5rem;
+  color: #333;
+  transition: all 0.3s ease;
+  display: inline-flex;
+}
+
+.social-icons a:hover {
+  color: #fcd34d;
+  transform: translateY(-3px);
+}
+
+/* Right Side Image - Mobile First */
+.about-image {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  animation: scaleIn 0.6s ease 0.2s backwards;
+}
+
+.circle-bg {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: #fcd34d;
+  border-radius: 50%;
+  z-index: 1;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.about-image img {
+  position: relative;
+  z-index: 2;
+  height: 300px;
+  width: 100%;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.about-image img:hover {
+  transform: scale(1.02);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* @keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+} */
+
+/* Tablet Styles */
+@media (min-width: 768px) {
+  .about-content {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 60px;
+    max-width: 1200px;
+    padding: 0;
+    /* margin: 0 auto; */
+  }
+
+  .about-text {
+    text-align: left;
+  }
+
+  .about-text h2 {
+    font-size: 3rem;
+  }
+
+  .about-text p {
+    font-size: 1.1rem;
+  }
+
+  .about-actions {
+    justify-content: flex-start;
+  }
+
+  .circle-bg {
+    width: 280px;
+    height: 280px;
+  }
+
+  .about-image img {
+    max-width: 250px;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1024px) {
+  .about-container {
+    padding-left: 80px;
+  }
+
+  .about-content {
+    gap: 80px;
+  }
+
+  .about-text h2 {
+    font-size: 3.5rem;
+  }
+
+  .about-text p {
+    font-size: larger;
+  }
+
+  .circle-bg {
+    width: 300px;
+    height: 300px;
+  }
+
+  .about-image img {
+    max-width: 270px;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1440px) {
+  .about-text h2 {
+    font-size: 4rem;
+  }
+
+  .circle-bg {
+    width: 350px;
+    height: 350px;
+  }
+
+  .about-image img {
+    max-width: 300px;
+  }
+}
+
+/* Mobile Landscape */
+@media (max-width: 480px) {
+  .about-text h2 {
+    font-size: 2rem;
+  }
+
+  .about-text p {
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    padding: 8px 20px;
+    font-size: 14px;
+  }
+
+  .social-icons a {
+    font-size: 1.2rem;
+  }
+
+  .circle-bg {
+    width: 180px;
+    height: 180px;
+  }
+
+  .about-image img {
+    max-width: 160px;
+  }
+
+  .about-actions {
+    gap: 15px;
+  }
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  .about-container,
+  .about-text,
+  .about-text h2,
+  .about-text p,
+  .about-actions,
+  .about-image {
+    animation: none;
+  }
+
+  .circle-bg {
+    animation: none;
+  }
+
+  .btn-yellow:hover,
+  .social-icons a:hover,
+  .about-image img:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,396 @@
+/* Projects.css - Modern Portfolio Style with Slower Scroll Reveal Animations */
+
+.projects-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 24px;
+  overflow-x: hidden;
+}
+
+.section-title {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 60px;
+  text-align: center;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: all 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.section-title.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #fcd34d, #fcd34d);
+  border-radius: 2px;
+  transition: width 0.8s ease 0.5s;
+}
+
+.section-title.animate::after {
+  width: 120px;
+}
+
+/* Modern Project Card - Initial hidden state */
+.project-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  background: white;
+  border-radius: 32px;
+  padding: 40px;
+  margin-bottom: 60px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  transition: all 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  transform: translateX(-60px) scale(0.95);
+}
+
+/* Alternate direction for even cards */
+.project-card:nth-child(even) {
+  transform: translateX(60px) scale(0.95);
+}
+
+/* Revealed state */
+.project-card.animate {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+/* Stagger delays - SLOWER */
+.project-card:nth-child(1).animate {
+  transition-delay: 0.2s;
+}
+.project-card:nth-child(2).animate {
+  transition-delay: 0.45s;
+}
+.project-card:nth-child(3).animate {
+  transition-delay: 0.7s;
+}
+.project-card:nth-child(4).animate {
+  transition-delay: 0.95s;
+}
+
+.project-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+  border-color: #fcd34d;
+  transition: all 0.4s ease;
+}
+
+/* Alternate layout for even cards */
+.project-card:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+/* Left Side Text */
+.project-text {
+  flex: 1;
+  padding-right: 20px;
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: all 0.7s ease 0.3s;
+}
+
+.project-card.animate .project-text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.project-card:nth-child(even) .project-text {
+  padding-right: 0;
+  padding-left: 20px;
+  transform: translateX(40px);
+}
+
+.project-card:nth-child(even).animate .project-text {
+  transform: translateX(0);
+}
+
+.project-text h3 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1a1a2e;
+  background: linear-gradient(135deg, #1a1a2e, #2c3e50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  display: inline-block;
+}
+
+.project-text h3::before {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: #fcd34d;
+  transition: width 0.6s ease 0.5s;
+  border-radius: 2px;
+}
+
+.project-card.animate .project-text h3::before {
+  width: 100%;
+}
+
+.project-text p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 28px;
+  opacity: 0.85;
+  transform: translateY(30px);
+  transition: all 0.7s ease 0.4s;
+}
+
+.project-card.animate .project-text p {
+  transform: translateY(0);
+}
+
+/* Modern Button - Commented but kept for future use */
+.btnView {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #fcd34d 0%, #fcd34d 100%);
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  border-radius: 40px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 15px rgba(252, 211, 77, 0.3);
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.project-card.animate .btnView {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: 0.2s;
+}
+
+.btnView:hover {
+  transform: translateX(5px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(252, 211, 77, 0.4);
+  color: #1a1a1a;
+  gap: 12px;
+}
+
+.btnView::after {
+  content: "→";
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+.btnView:hover::after {
+  transform: translateX(6px);
+}
+
+/* Right Side Image */
+.project-image {
+  flex: 1;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.7s ease;
+  opacity: 0;
+  transform: translateX(40px) rotate(3deg);
+}
+
+.project-card.animate .project-image {
+  opacity: 1;
+  transform: translateX(0) rotate(0);
+  transition-delay: 0.15s;
+}
+
+.project-card:nth-child(even) .project-image {
+  transform: translateX(-40px) rotate(-3deg);
+}
+
+.project-card:nth-child(even).animate .project-image {
+  transform: translateX(0) rotate(0);
+}
+
+.project-card:hover .project-image {
+  transform: scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s ease;
+}
+
+.project-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.project-card:hover .project-image img {
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .projects-container {
+    padding: 60px 20px;
+  }
+
+  .section-title {
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+
+  .section-title.animate::after {
+    width: 80px;
+  }
+
+  .project-card {
+    flex-direction: column !important;
+    padding: 30px;
+    gap: 30px;
+    margin-bottom: 40px;
+    transform: translateY(40px) scale(0.95) !important;
+  }
+
+  .project-card.animate {
+    transform: translateY(0) scale(1) !important;
+  }
+
+  .project-text {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    text-align: center;
+    transform: translateY(30px) !important;
+  }
+
+  .project-card.animate .project-text {
+    transform: translateY(0) !important;
+  }
+
+  .project-text h3 {
+    font-size: 22px;
+  }
+
+  .project-text p {
+    font-size: 15px;
+  }
+
+  .btnView {
+    margin: 0 auto;
+  }
+
+  .project-image {
+    width: 100%;
+    transform: translateY(30px) rotate(0) !important;
+  }
+
+  .project-card.animate .project-image {
+    transform: translateY(0) rotate(0) !important;
+  }
+
+  /* Mobile stagger delays - SLOWER */
+  .project-card:nth-child(1).animate {
+    transition-delay: 0.15s;
+  }
+  .project-card:nth-child(2).animate {
+    transition-delay: 0.35s;
+  }
+  .project-card:nth-child(3).animate {
+    transition-delay: 0.55s;
+  }
+  .project-card:nth-child(4).animate {
+    transition-delay: 0.75s;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-container {
+    padding: 40px 16px;
+  }
+
+  .section-title {
+    font-size: 28px;
+  }
+
+  .project-card {
+    padding: 20px;
+    border-radius: 24px;
+  }
+
+  .project-text h3 {
+    font-size: 18px;
+  }
+
+  .project-text p {
+    font-size: 13px;
+  }
+
+  .btnView {
+    padding: 10px 24px;
+    font-size: 13px;
+  }
+
+  /* Mobile stagger delays - SLOWER */
+  .project-card:nth-child(1).animate {
+    transition-delay: 0.1s;
+  }
+  .project-card:nth-child(2).animate {
+    transition-delay: 0.3s;
+  }
+  .project-card:nth-child(3).animate {
+    transition-delay: 0.5s;
+  }
+  .project-card:nth-child(4).animate {
+    transition-delay: 0.7s;
+  }
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  .section-title,
+  .project-card,
+  .project-text,
+  .project-text p,
+  .btnView,
+  .project-image {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .project-card {
+    transform: none !important;
+  }
+
+  .section-title::after {
+    transition: none;
+  }
+
+  .project-text h3::before {
+    display: none;
+  }
+}

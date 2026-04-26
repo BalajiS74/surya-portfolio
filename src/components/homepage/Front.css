@@ -1,0 +1,327 @@
+/* Mobile First Design with Animations */
+.front-container {
+  background: #fff;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+  animation: fadeIn 0.6s ease;
+}
+
+/* Hero Section - Mobile First */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* padding: 40px 20px; */
+  gap: 40px;
+}
+
+.hero-text {
+  flex: 1;
+  max-width: 100%;
+  text-align: center;
+  animation: slideUp 0.6s ease forwards;
+}
+
+.role {
+  text-transform: uppercase;
+  color: #666;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: inline-block;
+  animation: fadeIn 0.8s ease;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  animation: fadeInUp 0.8s ease;
+}
+
+.hero-text p {
+  color: #555;
+  margin-bottom: 30px;
+  font-size: 1rem;
+  animation: fadeInUp 0.8s ease 0.1s backwards;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.8s ease 0.2s backwards;
+}
+
+.btn {
+  padding: 10px 25px;
+  border-radius: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-green {
+  background: #c7d925;
+  color: #fff;
+  border: none;
+}
+
+.btn-green:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(199, 217, 37, 0.3);
+}
+
+.btn-outline {
+  border: 1px solid #d6d925;
+  color: #d9ac25;
+  background: transparent;
+}
+
+.btn-outline:hover {
+  transform: translateY(-3px);
+  background: rgba(214, 217, 37, 0.05);
+}
+
+/* Right Image + Shape - Mobile First */
+.hero-image {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  animation: scaleIn 0.6s ease 0.2s backwards;
+}
+
+.hero-image img {
+  position: relative;
+  z-index: 2;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.hero-image img:hover {
+  transform: scale(1.02);
+}
+
+/* Floating Animation for Shape */
+.hero-image::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  background: rgba(199, 217, 37, 0.1);
+  border-radius: 50%;
+  z-index: 1;
+  animation: float 4s ease-in-out infinite;
+}
+
+.hero-image::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  width: 100px;
+  height: 100px;
+  background: rgba(214, 217, 37, 0.08);
+  border-radius: 50%;
+  z-index: 1;
+  animation: float 5s ease-in-out infinite reverse;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Tablet Styles */
+@media (min-width: 768px) {
+  .hero {
+    flex-direction: row;
+    padding: 0px 40px;
+    padding-left: 60px;
+    gap: 60px;
+  }
+
+  .hero-text {
+    max-width: 500px;
+    text-align: left;
+  }
+
+  .hero-text h1 {
+    font-size: 3.5rem;
+  }
+
+  .hero-text p {
+    font-size: 1.1rem;
+  }
+
+  .buttons {
+    justify-content: flex-start;
+  }
+
+  .hero-image {
+    justify-content: flex-end;
+  }
+
+  .hero-image::before {
+    width: 150px;
+    height: 150px;
+    top: -30px;
+    right: -30px;
+  }
+
+  .hero-image::after {
+    width: 130px;
+    height: 130px;
+    bottom: -30px;
+    left: -30px;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1024px) {
+  .hero {
+    /* padding: 60px 80px; */
+    /* padding-left: 80px; */
+    gap: 80px;
+  }
+
+  .hero-text h1 {
+    font-size: 4rem;
+  }
+
+  .hero-text p {
+    font-size: larger;
+  }
+
+  .hero-image::before {
+    width: 180px;
+    height: 180px;
+  }
+
+  .hero-image::after {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1440px) {
+  .hero {
+    /* padding: 80px 120px; */
+    padding-left: 80px;
+  }
+
+  .hero-text h1 {
+    font-size: 4.5rem;
+  }
+}
+
+/* Mobile Landscape */
+@media (max-width: 480px) {
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .hero-text p {
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    padding: 8px 20px;
+    font-size: 14px;
+  }
+  .hero-image {
+    display: none;
+  }
+  .hero-image::before {
+    width: 80px;
+    height: 80px;
+    top: -10px;
+    right: -10px;
+  }
+
+  .hero-image::after {
+    width: 70px;
+    height: 70px;
+    bottom: -10px;
+    left: -10px;
+  }
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  .front-container,
+  .hero-text,
+  .role,
+  .hero-text h1,
+  .hero-text p,
+  .buttons,
+  .hero-image {
+    animation: none;
+  }
+
+  .hero-image::before,
+  .hero-image::after {
+    animation: none;
+  }
+
+  .btn-green:hover,
+  .btn-outline:hover,
+  .hero-image img:hover {
+    transform: none;
+  }
+}

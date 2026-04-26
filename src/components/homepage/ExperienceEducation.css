@@ -1,0 +1,320 @@
+/* ExperienceEducation.css - With Scroll Animations */
+.exp-edu-section {
+  background: #ffffff;
+  padding: 80px 0;
+  overflow-x: hidden;
+}
+
+.exp-edu-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* Header */
+.exp-edu-header {
+  text-align: center;
+  margin-bottom: 56px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.exp-edu-header.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.exp-edu-title {
+  font-size: 46px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.3px;
+}
+
+.exp-edu-underline {
+  width: 60px;
+  height: 4px;
+  background: #fcd34d;
+  margin: 0 auto;
+  transition: width 0.4s ease;
+}
+
+.exp-edu-header.animate .exp-edu-underline {
+  width: 80px;
+}
+
+/* Two Column Grid */
+.exp-edu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+/* Column Titles */
+.column-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 24px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f0f0f0;
+  letter-spacing: -0.2px;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.5s ease;
+}
+
+.column-title.animate {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Experience Cards */
+.exp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.exp-card {
+  border-left: 2px solid #f0f0f0;
+  padding-left: 20px;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.5s ease;
+}
+
+.exp-card.animate {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger delays for experience cards */
+.exp-card:nth-child(1).animate {
+  transition-delay: 0.1s;
+}
+.exp-card:nth-child(2).animate {
+  transition-delay: 0.2s;
+}
+.exp-card:nth-child(3).animate {
+  transition-delay: 0.3s;
+}
+
+.exp-card:hover {
+  border-left-color: #fcd34d;
+  transform: translateX(5px);
+}
+
+.exp-period {
+  font-size: 16px;
+  font-weight: 500;
+  color: #e1ac00;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+
+.exp-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+}
+
+.exp-company {
+  font-size: 18px;
+  color: #666666;
+  margin-bottom: 12px;
+}
+
+.exp-description {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #555555;
+  margin: 0;
+}
+
+/* Education Cards */
+.edu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.edu-card {
+  border-left: 2px solid #f0f0f0;
+  padding-left: 20px;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.5s ease;
+}
+
+.edu-card.animate {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger delays for education cards */
+.edu-card:nth-child(1).animate {
+  transition-delay: 0.1s;
+}
+.edu-card:nth-child(2).animate {
+  transition-delay: 0.2s;
+}
+.edu-card:nth-child(3).animate {
+  transition-delay: 0.3s;
+}
+
+.edu-card:hover {
+  border-left-color: #fcd34d;
+  transform: translateX(5px);
+}
+
+.edu-period {
+  font-size: 16px;
+  font-weight: 500;
+  color: #fcd34d;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+
+.edu-degree {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+}
+
+.edu-field {
+  font-size: 18px;
+  color: #666666;
+  margin-bottom: 4px;
+}
+
+.edu-institution {
+  font-size: 18px;
+  color: #888888;
+}
+
+/* Scroll Reveal Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .exp-edu-section {
+    padding: 60px 0;
+  }
+
+  .exp-edu-container {
+    padding: 0 20px;
+  }
+
+  .exp-edu-title {
+    font-size: 36px;
+  }
+
+  .exp-edu-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .column-title {
+    font-size: 22px;
+  }
+
+  .exp-title,
+  .edu-degree {
+    font-size: 20px;
+  }
+
+  .exp-description {
+    font-size: 16px;
+  }
+
+  .exp-card,
+  .edu-card {
+    transform: translateX(0);
+  }
+
+  .exp-card.animate,
+  .edu-card.animate {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .exp-edu-title {
+    font-size: 30px;
+  }
+
+  .exp-card,
+  .edu-card {
+    padding-left: 16px;
+  }
+
+  .exp-period,
+  .edu-period {
+    font-size: 14px;
+  }
+
+  .exp-title,
+  .edu-degree {
+    font-size: 18px;
+  }
+
+  .exp-company,
+  .edu-field,
+  .edu-institution {
+    font-size: 15px;
+  }
+
+  .exp-description {
+    font-size: 14px;
+  }
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  .exp-edu-header,
+  .column-title,
+  .exp-card,
+  .edu-card {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
