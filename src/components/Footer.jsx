@@ -13,7 +13,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="footer-brand">
             <h3 className="footer-logo">Surya Prabha</h3>
-            <p className="footer-tagline">JAVA FULL STACK DEVELOPER</p>
+            <p className="footer-tagline">JAVA DEVELOPER</p>
             <p className="footer-bio">
               Creating meaningful digital experiences through thoughtful design
               and clean code.

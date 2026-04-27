@@ -1,108 +1,66 @@
 // components/ContactDashboard.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ContactDashboard.css";
+import {
+  getAllPortfolios,
+  deletePortfolio,
+  updatePortfolio,
+} from "../api/portfolioApi";
 
 const ContactDashboard = () => {
   const [selectedContact, setSelectedContact] = useState(null);
   const [filter, setFilter] = useState("all");
-  const [contacts, setContacts] = useState([
-    {
-      id: 1,
-      name: "Rajesh Kumar",
-      email: "rajesh.kumar@example.com",
-      phone: "+91 98765 43210",
-      subject: "Business Partnership Opportunity",
-      message:
-        "We are looking for a strategic partnership with your company. Would love to discuss potential collaboration opportunities in the AI space.",
-      date: "2024-03-15",
-      time: "10:30 AM",
-      status: "pending",
-      category: "business",
-      priority: "high",
-      company: "Tech Innovations Ltd",
-      country: "India",
-    },
-    {
-      id: 2,
-      name: "Priya Sharma",
-      email: "priya.sharma@example.com",
-      phone: "+91 87654 32109",
-      subject: "Speaking Engagement Request",
-      message:
-        "We would like to invite you as a keynote speaker at our annual tech conference. Your insights on leadership would be valuable.",
-      date: "2024-03-14",
-      time: "02:15 PM",
-      status: "read",
-      category: "speaking",
-      priority: "medium",
-      company: "Tech Conference Org",
-      country: "India",
-    },
-    {
-      id: 3,
-      name: "Michael Chen",
-      email: "michael.chen@example.com",
-      phone: "+65 9123 4567",
-      subject: "Investment Inquiry",
-      message:
-        "Our venture capital firm is interested in learning more about your company's growth plans and potential investment opportunities.",
-      date: "2024-03-13",
-      time: "11:45 AM",
-      status: "replied",
-      category: "investment",
-      priority: "high",
-      company: "Golden Gate Ventures",
-      country: "Singapore",
-    },
-    {
-      id: 4,
-      name: "Sarah Johnson",
-      email: "sarah.johnson@example.com",
-      phone: "+1 415 555 1234",
-      subject: "Media Interview Request",
-      message:
-        "We would love to feature you in our 'Leaders of Tomorrow' podcast series. The episode would focus on your entrepreneurial journey.",
-      date: "2024-03-12",
-      time: "09:00 AM",
-      status: "pending",
-      category: "media",
-      priority: "medium",
-      company: "Leaders Podcast",
-      country: "USA",
-    },
-    {
-      id: 5,
-      name: "Amit Patel",
-      email: "amit.patel@example.com",
-      phone: "+91 99887 66554",
-      subject: "Collaboration for Social Impact",
-      message:
-        "We are working on a social impact project and would love to collaborate with your organization to make a difference.",
-      date: "2024-03-11",
-      time: "03:30 PM",
-      status: "read",
-      category: "collaboration",
-      priority: "low",
-      company: "Social Impact Initiative",
-      country: "India",
-    },
-    {
-      id: 6,
-      name: "Emma Watson",
-      email: "emma.w@example.com",
-      phone: "+44 7700 123456",
-      subject: "Advisory Board Invitation",
-      message:
-        "We are forming an advisory board and would be honored if you would consider joining us.",
-      date: "2024-03-10",
-      time: "01:20 PM",
-      status: "pending",
-      category: "advisory",
-      priority: "high",
-      company: "Global Tech Council",
-      country: "UK",
-    },
-  ]);
+  const [contacts, setContacts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch data from API on component mount
+  useEffect(() => {
+    fetchContacts();
+  }, []);
+
+  const fetchContacts = async () => {
+    try {
+      setLoading(true);
+      const response = await getAllPortfolios();
+      // API returns { success: true, data: [...] } - extract the data array
+      const apiData = response.data || response;
+      // Transform API data to match component's expected format
+      const transformedContacts = (Array.isArray(apiData) ? apiData : []).map(
+        (item, index) => ({
+          id: item._id || item.id || index + 1,
+          name: item.name || "Unknown",
+          email: item.email || "",
+          phone: item.phone || "",
+          subject: item.subject || item.title || "No Subject",
+          message: item.message || item.description || "",
+          date: item.createdAt
+            ? new Date(item.createdAt).toISOString().split("T")[0]
+            : new Date().toISOString().split("T")[0],
+          time: item.createdAt
+            ? new Date(item.createdAt).toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : "12:00 PM",
+          status: item.status || "pending",
+          category: item.category || "general",
+          priority: item.priority || "medium",
+          company: item.company || "",
+          country: item.country || "",
+        }),
+      );
+      setContacts(transformedContacts);
+      setError(null);
+    } catch (err) {
+      console.error("Failed to fetch contacts:", err);
+      setError("Failed to load contacts. Please try again later.");
+      // Fallback to empty array - dashboard will show empty state
+      setContacts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
 
@@ -151,10 +109,18 @@ const ContactDashboard = () => {
     }
   };
 
-  const handleDelete = (id) => {
-    setContacts(contacts.filter((contact) => contact.id !== id));
-    setShowDeleteConfirm(null);
-    setSelectedContact(null);
+  const handleDelete = async (id) => {
+    try {
+      // Call the API to delete from backend
+      await deletePortfolio(id);
+      // Remove from local state after successful API call
+      setContacts(contacts.filter((contact) => contact.id !== id));
+      setShowDeleteConfirm(null);
+      setSelectedContact(null);
+    } catch (err) {
+      console.error("Failed to delete contact:", err);
+      alert("Failed to delete contact. Please try again.");
+    }
   };
 
   const handleMarkAsRead = (id) => {
@@ -170,159 +136,196 @@ const ContactDashboard = () => {
       <div className="dashboard-container">
         {/* Header */}
         <div className="dashboard-header">
-          <h2 className="dashboard-title">Contact Dashboard</h2>
-          <p className="dashboard-subtitle">
-            View all messages from your visitors
-          </p>
+          <div className="header-row">
+            <div>
+              <h2 className="dashboard-title">Contact Dashboard</h2>
+              <p className="dashboard-subtitle">
+                View all messages from your visitors
+              </p>
+            </div>
+            <button
+              className="refresh-button"
+              onClick={fetchContacts}
+              disabled={loading}
+            >
+              {loading ? "⟳" : "↻"} Refresh
+            </button>
+          </div>
         </div>
+
+        {/* Loading State */}
+        {loading && (
+          <div className="loading-container">
+            <div className="loading-spinner"></div>
+            <p>Loading contacts...</p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="error-container">
+            <p className="error-message">{error}</p>
+            <button className="retry-button" onClick={fetchContacts}>
+              Retry
+            </button>
+          </div>
+        )}
 
         {/* Stats Cards */}
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-icon">📬</div>
-            <div className="stat-info">
-              <h3 className="stat-number">{stats.total}</h3>
-              <p className="stat-label">Total Messages</p>
+        {!loading && !error && (
+          <div className="stats-grid">
+            <div className="stat-card">
+              <div className="stat-icon">📬</div>
+              <div className="stat-info">
+                <h3 className="stat-number">{stats.total}</h3>
+                <p className="stat-label">Total Messages</p>
+              </div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-icon">⏳</div>
+              <div className="stat-info">
+                <h3 className="stat-number">{stats.pending}</h3>
+                <p className="stat-label">Unread</p>
+              </div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-icon">📖</div>
+              <div className="stat-info">
+                <h3 className="stat-number">{stats.read}</h3>
+                <p className="stat-label">Read</p>
+              </div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-icon">✅</div>
+              <div className="stat-info">
+                <h3 className="stat-number">{stats.replied}</h3>
+                <p className="stat-label">Replied</p>
+              </div>
             </div>
           </div>
-          <div className="stat-card">
-            <div className="stat-icon">⏳</div>
-            <div className="stat-info">
-              <h3 className="stat-number">{stats.pending}</h3>
-              <p className="stat-label">Unread</p>
-            </div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon">📖</div>
-            <div className="stat-info">
-              <h3 className="stat-number">{stats.read}</h3>
-              <p className="stat-label">Read</p>
-            </div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon">✅</div>
-            <div className="stat-info">
-              <h3 className="stat-number">{stats.replied}</h3>
-              <p className="stat-label">Replied</p>
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* Filter Tabs */}
-        <div className="filter-tabs">
-          {categories.map((cat) => (
-            <button
-              key={cat.value}
-              className={`filter-tab ${filter === cat.value ? "active" : ""}`}
-              onClick={() => setFilter(cat.value)}
-            >
-              {cat.label}
-              <span className="tab-count">{cat.count}</span>
-            </button>
-          ))}
-        </div>
+        {!loading && !error && (
+          <div className="filter-tabs">
+            {categories.map((cat) => (
+              <button
+                key={cat.value}
+                className={`filter-tab ${filter === cat.value ? "active" : ""}`}
+                onClick={() => setFilter(cat.value)}
+              >
+                {cat.label}
+                <span className="tab-count">{cat.count}</span>
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Dashboard Content */}
-        <div className="dashboard-content">
-          {/* Contact List Table */}
-          <div className="contact-table-container">
-            <table className="contact-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Contact Info</th>
-                  <th>Subject</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredContacts.map((contact) => (
-                  <tr key={contact.id} className="contact-row">
-                    <td className="contact-name-cell">
-                      <div className="contact-avatar">
-                        {contact.name.charAt(0)}
-                      </div>
-                      <div>
-                        <div className="contact-name">{contact.name}</div>
-                        <div className="contact-company">{contact.company}</div>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="contact-info-cell">
-                        <div className="contact-email">{contact.email}</div>
-                        <div className="contact-phone">{contact.phone}</div>
-                      </div>
-                    </td>
-                    <td className="contact-subject">{contact.subject}</td>
-                    <td>
-                      <div className="contact-date">{contact.date}</div>
-                      <div className="contact-time">{contact.time}</div>
-                    </td>
-                    <td>
-                      <span
-                        className={`status-badge ${getStatusColor(contact.status)}`}
-                      >
-                        {contact.status}
-                      </span>
-                    </td>
-                    <td>
-                      <div className="action-buttons">
-                        <button
-                          className="view-btn"
-                          onClick={() => setSelectedContact(contact)}
-                        >
-                          View
-                        </button>
-                        <button
-                          className="delete-btn"
-                          onClick={() => setShowDeleteConfirm(contact.id)}
-                        >
-                          🗑️
-                        </button>
-                      </div>
-                    </td>
+        {!loading && !error && (
+          <div className="dashboard-content">
+            {/* Contact List Table */}
+            <div className="contact-table-container">
+              <table className="contact-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Contact Info</th>
+                    <th>Subject</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filteredContacts.map((contact) => (
+                    <tr key={contact.id} className="contact-row">
+                      <td className="contact-name-cell">
+                        <div className="contact-avatar">
+                          {contact.name.charAt(0)}
+                        </div>
+                        <div>
+                          <div className="contact-name">{contact.name}</div>
+                          <div className="contact-company">
+                            {contact.company}
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="contact-info-cell">
+                          <div className="contact-email">{contact.email}</div>
+                          <div className="contact-phone">{contact.phone}</div>
+                        </div>
+                      </td>
+                      <td className="contact-subject">{contact.subject}</td>
+                      <td>
+                        <div className="contact-date">{contact.date}</div>
+                        <div className="contact-time">{contact.time}</div>
+                      </td>
+                      <td>
+                        <span
+                          className={`status-badge ${getStatusColor(contact.status)}`}
+                        >
+                          {contact.status}
+                        </span>
+                      </td>
+                      <td>
+                        <div className="action-buttons">
+                          <button
+                            className="view-btn"
+                            onClick={() => setSelectedContact(contact)}
+                          >
+                            View
+                          </button>
+                          <button
+                            className="delete-btn"
+                            onClick={() => setShowDeleteConfirm(contact.id)}
+                          >
+                            🗑️
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
 
-            {filteredContacts.length === 0 && (
-              <div className="empty-state">
-                <div className="empty-icon">📭</div>
-                <h3>No messages found</h3>
-                <p>All messages are cleared</p>
-              </div>
-            )}
-          </div>
-
-          {/* Recent Activity Sidebar */}
-          <div className="recent-activity">
-            <h3 className="activity-title">Recent Messages</h3>
-            <div className="activity-list">
-              {contacts.slice(0, 5).map((contact) => (
-                <div
-                  key={contact.id}
-                  className={`activity-item ${contact.status === "pending" ? "unread" : ""}`}
-                  onClick={() => setSelectedContact(contact)}
-                >
-                  <div className="activity-dot"></div>
-                  <div className="activity-content">
-                    <p className="activity-text">
-                      <strong>{contact.name}</strong>
-                      {contact.status === "pending" && (
-                        <span className="unread-badge">New</span>
-                      )}
-                    </p>
-                    <p className="activity-subject">{contact.subject}</p>
-                    <span className="activity-time">{contact.date}</span>
-                  </div>
+              {filteredContacts.length === 0 && (
+                <div className="empty-state">
+                  <div className="empty-icon">📭</div>
+                  <h3>No messages found</h3>
+                  <p>All messages are cleared</p>
                 </div>
-              ))}
+              )}
+            </div>
+
+            {/* Recent Activity Sidebar */}
+            <div className="recent-activity">
+              <h3 className="activity-title">Recent Messages</h3>
+              <div className="activity-list">
+                {contacts.slice(0, 5).map((contact) => (
+                  <div
+                    key={contact.id}
+                    className={`activity-item ${contact.status === "pending" ? "unread" : ""}`}
+                    onClick={() => setSelectedContact(contact)}
+                  >
+                    <div className="activity-dot"></div>
+                    <div className="activity-content">
+                      <p className="activity-text">
+                        <strong>{contact.name}</strong>
+                        {contact.status === "pending" && (
+                          <span className="unread-badge">New</span>
+                        )}
+                      </p>
+                      <p className="activity-subject">{contact.subject}</p>
+                      <span className="activity-time">{contact.date}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Modal for Viewing Contact Details */}
         {selectedContact && (

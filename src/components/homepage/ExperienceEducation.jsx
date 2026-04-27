@@ -43,7 +43,7 @@ const ExperienceEducation = () => {
   const experienceData = [
     {
       id: 1,
-      title: "Full stack java developer",
+      title: "Java developer",
       company: "TCS Inc.",
       period: "2026 — Present",
       description:

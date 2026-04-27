@@ -1,7 +1,11 @@
 // components/Blog.js - With Very Slow One-by-One Scroll Reveal Animations
 import React, { useState, useEffect, useRef } from "react";
 import "./Blog.css";
-
+import govm from "../../assets/works/govm.jpeg";
+import psn from "../../assets/works/psn.jpeg";
+import tvc from "../../assets/works/tvc.jpeg";
+import awards from "../../assets/works/awards.jpeg";
+import psnclg from "../../assets/works/psnclg.jpeg";
 const Blog = () => {
   const [filter, setFilter] = useState("all");
   const [isVisible, setIsVisible] = useState(false);
@@ -10,83 +14,66 @@ const Blog = () => {
   const blogPosts = [
     {
       id: 1,
-      title: "The Future of Digital Transformation in 2024",
+      title: "Analysis student project",
       excerpt:
-        "Exploring emerging trends in AI, cloud computing, and how businesses can adapt to stay competitive in the digital age.",
+        "A dedicated practical module focused on bridging theoretical concepts with industry application through intensive laboratory sessions and hands-on experimentation.",
       date: "March 15, 2024",
       readTime: "8 min read",
       category: "leadership",
-      image:
-        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800",
+      image: govm, // Local image for featured post
       author: "Surya Prabha",
-      authorRole: "CEO & Founder",
+      // authorRole: "CEO & Founder",
       featured: true,
     },
     {
       id: 2,
-      title: "Building a Culture of Innovation",
+      title: "Startup Tamilnadu project",
       excerpt:
-        "How to foster creativity and innovation within your organization while maintaining operational excellence.",
-      date: "February 28, 2024",
-      readTime: "6 min read",
-      category: "culture",
-      image:
-        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800",
+        "Understanding the critical role of user experience in enterprise solutions and ROI impact.",
+      date: "January 25, 2024",
+      readTime: "5 min read",
+      category: "design",
+      image: awards,
       author: "Surya Prabha",
       authorRole: "CEO & Founder",
       featured: false,
     },
+
     {
       id: 3,
-      title: "Lessons from Scaling a Startup to Success",
+      title: "Seminar on strategic leadership",
       excerpt:
-        "Key insights and lessons learned from growing a venture from idea to market leader in 3 years.",
-      date: "February 10, 2024",
-      readTime: "10 min read",
-      category: "entrepreneurship",
-      image:
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
+        "Strategic approaches to leading your company through challenging economic times.",
+      date: "January 12, 2024",
+      readTime: "7 min read",
+      category: "leadership",
+      image: psnclg,
       author: "Surya Prabha",
       authorRole: "CEO & Founder",
       featured: false,
     },
     {
       id: 4,
-      title: "Why UX Matters in Enterprise Software",
+      title: "Placement awareness Program",
       excerpt:
-        "Understanding the critical role of user experience in enterprise solutions and ROI impact.",
-      date: "January 25, 2024",
-      readTime: "5 min read",
-      category: "design",
-      image:
-        "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=800",
+        "Empowering students to bridge the gap between academia and industry through expert career guidance, hands-on skill development, and direct access to professional opportunities.",
+      date: "February 10, 2024",
+      readTime: "10 min read",
+      category: "entrepreneurship",
+      image: tvc,
       author: "Surya Prabha",
       authorRole: "CEO & Founder",
       featured: false,
     },
     {
       id: 5,
-      title: "Navigating Economic Uncertainty as a Leader",
+      title: "Technical Workshop at PSN institute of Technology",
       excerpt:
-        "Strategic approaches to leading your company through challenging economic times.",
-      date: "January 12, 2024",
-      readTime: "7 min read",
-      category: "leadership",
-      image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800",
-      author: "Surya Prabha",
-      authorRole: "CEO & Founder",
-      featured: false,
-    },
-    {
-      id: 6,
-      title: "The Power of Mentorship in Tech",
-      excerpt:
-        "How mentorship shaped my career and why giving back matters for industry growth.",
-      date: "December 20, 2023",
+        "Interactive sessions with young students to boost creativity and learning.",
+      date: "February 28, 2024",
       readTime: "6 min read",
-      category: "career",
-      image:
-        "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800",
+      category: "Workshop",
+      image: psn,
       author: "Surya Prabha",
       authorRole: "CEO & Founder",
       featured: false,

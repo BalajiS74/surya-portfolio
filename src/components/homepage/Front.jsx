@@ -10,8 +10,8 @@ const Front = () => {
       <div className="hero">
         {/* Left Text */}
         <div className="hero-text">
-          <h5 className="role">JAVA FULL STACK DEVELOPER</h5>
-          <h1>Hello, I’m Surya Prabha</h1>
+          <h5 className="role"> JAVA DEVELOPER</h5>
+          <h1>Hello, I’m Surya Prabha </h1>
           <p>
             To work in organization where culture of freedom and working for
             initiatives is ensured, facilitating my contribution through

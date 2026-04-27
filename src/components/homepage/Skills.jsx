@@ -54,7 +54,7 @@ const Skills = () => {
     },
     other: {
       name: "Other Expertise",
-      skills: ["Figma", "Flutter", "BE (CSE)", "PROJECT CNNA (Cisco)"],
+      skills: ["Figma", "Flutter", "PROJECT CNNA (Cisco)"],
     },
   };
 
@@ -81,7 +81,7 @@ const Skills = () => {
         {/* Category Navigation */}
 
         {/* Skills Grid */}
-      
+
         {/* Categories Grid */}
         <div className="categories-grid">
           {Object.entries(skillsData).map(([key, category]) => (

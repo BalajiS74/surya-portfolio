@@ -1,6 +1,7 @@
 // pages/Contact.js
 import React, { useState } from "react";
 import "./Contact.css";
+import { createPortfolio } from "../../api/portfolioApi";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -23,13 +24,26 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      // Call the real API
+      await createPortfolio({
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject || "General Enquiry",
+        message: formData.message,
+      });
+
       setSubmitStatus("success");
-      setIsSubmitting(false);
       setFormData({ name: "", email: "", subject: "", message: "" });
       setTimeout(() => setSubmitStatus(null), 5000);
-    }, 1500);
+      console.log("Form submitted successfully:", formData);
+    } catch (error) {
+      console.error("Failed to submit form:", error);
+      setSubmitStatus("error");
+      setTimeout(() => setSubmitStatus(null), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
